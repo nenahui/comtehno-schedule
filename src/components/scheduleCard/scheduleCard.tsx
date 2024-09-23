@@ -6,25 +6,18 @@ interface Props {
 }
 
 export const ScheduleCard: React.FC<Props> = ({ lesson }) => {
-  // Функция для парсинга времени урока
   const parseTime = (time: string) => {
     const [hours, minutes] = time.split(':');
     const date = new Date();
-    date.setHours(Number(hours), Number(minutes), 0, 0); // Устанавливаем часы и минуты на текущей дате
+    date.setHours(Number(hours), Number(minutes), 0, 0);
     return date;
   };
 
-  const dateString = 'Mon Sep 23 2024 9:00 GMT+0600';
-  const currentDate = new Date(dateString);
-  // const currentTime = new Date(); // Текущее системное время
-  const startTime = parseTime(lesson.startTime); // Парсим startTime
-  const endTime = parseTime(lesson.endTime); // Парсим endTime
+  const currentTime = new Date();
+  const startTime = parseTime(lesson.startTime);
+  const endTime = parseTime(lesson.endTime);
 
-  console.log('Current Time:', currentDate);
-  console.log('Start Time:', startTime);
-  console.log('End Time:', endTime);
-
-  const currentLesson = currentDate >= startTime && currentDate <= endTime;
+  const currentLesson = currentTime >= startTime && currentTime <= endTime;
 
   return (
     <div
