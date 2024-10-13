@@ -5,7 +5,7 @@
 }
 
 .mainNavOpen {
-  @apply h-[170px];
+  @apply h-[200px];
 }
 
 .nav {
@@ -22,8 +22,4 @@
 
 .btnLogout {
   @apply md:right-2 absolute right-12 top-2 !important;
-}
-
-.section {
-  @apply max-md:mt-10 md:pt-1.5  !important;
 }

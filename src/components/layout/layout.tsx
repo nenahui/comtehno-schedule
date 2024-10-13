@@ -84,7 +84,9 @@ export const Layout: React.FC<PropsWithChildren> = ({ children }) => {
           </nav>
         </header>
       )}
-      <section className={`${styles.section} ${user?.token && 'border-t'} pt-1.5`}>{children}</section>
+      <section className={`${styles.section} ${user?.token && 'border-t max-md:mt-10 md:pt-1.5'} pt-1.5`}>
+        {children}
+      </section>
     </main>
   );
 };
