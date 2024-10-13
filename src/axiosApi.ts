@@ -3,7 +3,7 @@ import type { Store } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 export const axiosApi = axios.create({
-  baseURL: 'http://api.timetable.makalabox.com:9999/api',
+  baseURL: 'https://api.timetable.makalabox.com/api',
 });
 
 export const addTokenInterceptors = (store: Store<RootState>) => {

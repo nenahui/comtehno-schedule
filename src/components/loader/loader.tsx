@@ -7,7 +7,7 @@ interface Props {
 
 export const Loader: React.FC<Props> = ({ absoluteCenter, className }) => {
   return (
-    <div className={`${absoluteCenter && 'absolute top-1/2 left-1/2 -translate-y-2/4 -translate-x-2/4'}`}>
+    <div className={`${absoluteCenter && 'fixed top-1/2 left-1/2 -translate-y-2/4 -translate-x-2/4'}`}>
       <svg
         xmlns='http://www.w3.org/2000/svg'
         width='24'
