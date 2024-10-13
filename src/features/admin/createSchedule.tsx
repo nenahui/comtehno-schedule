@@ -1,4 +1,5 @@
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
+import { Loader } from '@/components/loader/loader';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import {
@@ -8,16 +9,17 @@ import {
   selectAdminDisciplinesFetching,
   selectAdminGroups,
   selectAdminGroupsFetching,
+  selectAdminScheduleCreating,
   selectAdminTeachers,
   selectAdminTeachersFetching,
-} from '@/features/createSchedule/createScheduleSlice';
+} from '@/features/admin/adminSlice';
 import {
   createSchedule,
   fetchAudiences,
   fetchDisciplines,
   fetchGroups,
   fetchTeachers,
-} from '@/features/createSchedule/createScheduleThunks';
+} from '@/features/admin/adminThunks';
 import type { ScheduleMutation } from '@/types';
 import React, { type FormEvent, useEffect, useState } from 'react';
 
@@ -41,6 +43,7 @@ export const CreateSchedule: React.FC = () => {
   const disciplinesFetching = useAppSelector(selectAdminDisciplinesFetching);
   const audiences = useAppSelector(selectAdminAudiences);
   const audiencesFetching = useAppSelector(selectAdminAudiencesFetching);
+  const isCreating = useAppSelector(selectAdminScheduleCreating);
 
   useEffect(() => {
     if (course) {
@@ -53,8 +56,8 @@ export const CreateSchedule: React.FC = () => {
   }, [dispatch]);
 
   const generateTimeOptions = () => {
-    const options = [];
-    for (let hour = 0; hour < 24; hour++) {
+    const options: string[] = [];
+    for (let hour = 7; hour < 19; hour++) {
       for (let minute = 0; minute < 60; minute += 10) {
         const value = `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
         options.push(value);
@@ -74,6 +77,18 @@ export const CreateSchedule: React.FC = () => {
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
 
+    if (
+      !course ||
+      !scheduleMutation.groupId ||
+      !scheduleMutation.teacherId ||
+      !scheduleMutation.disciplineId ||
+      !scheduleMutation.audienceId ||
+      !scheduleMutation.dayOfWeek ||
+      !scheduleMutation.startDate ||
+      !scheduleMutation.endDate
+    )
+      return;
+
     dispatch(createSchedule(scheduleMutation));
   };
 
@@ -81,7 +96,7 @@ export const CreateSchedule: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className={'flex flex-col gap-3'}>
+      <div className={'flex flex-col gap-3 mt-2'}>
         <Select value={course} onValueChange={(value) => setCourse(value)}>
           <SelectTrigger>
             <SelectValue placeholder='Выберите курс' />
@@ -227,7 +242,12 @@ export const CreateSchedule: React.FC = () => {
           </SelectContent>
         </Select>
 
-        <Button>Создать</Button>
+        <Button
+          type={'submit'}
+          disabled={isCreating || audiencesFetching || groupsFetching || teachersFetching || disciplinesFetching}
+        >
+          Создать {isCreating && <Loader className={'ml-2 size-4 text-muted-foreground'} />}
+        </Button>
       </div>
     </form>
   );

@@ -1,50 +1,82 @@
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
+import { Loader } from '@/components/loader/loader';
 import { ScheduleCard } from '@/components/scheduleCard/scheduleCard';
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-import { timetable } from '@/features/home/data';
+import { Courses } from '@/features/home/components/courses/courses';
+import { Days } from '@/features/home/components/days/days';
+import { Groups } from '@/features/home/components/groups/groups';
+import {
+  selectDay,
+  selectGroups,
+  selectGroupsFetching,
+  selectSchedule,
+  selectScheduleFetching,
+} from '@/features/home/homeSlice';
+import { fetchGroups, fetchSchedules } from '@/features/home/homeThunks';
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 
 export const Home: React.FC = () => {
-  const [selectedGroup, setSelectedGroup] = useState<string | null>(null);
+  const dispatch = useAppDispatch();
+  const selectedDay = useAppSelector(selectDay);
+  const groups = useAppSelector(selectGroups);
+  const groupsFetching = useAppSelector(selectGroupsFetching);
+  const schedules = useAppSelector(selectSchedule);
+  const schedulesFetching = useAppSelector(selectScheduleFetching);
 
-  const filteredTimetable = selectedGroup ? timetable.filter((entry) => entry.group === selectedGroup) : timetable;
-  const uniqueGroups = Array.from(new Set(timetable.map((entry) => entry.group)));
+  useEffect(() => {
+    dispatch(fetchGroups());
+    dispatch(fetchSchedules());
+  }, [dispatch]);
 
-  const handleButtonClick = (group: string) => {
-    setSelectedGroup(group);
-  };
+  if (groupsFetching) {
+    return <Loader absoluteCenter className={'text-muted-foreground size-5'} />;
+  }
+
+  const currentDay =
+    selectedDay === 1
+      ? 'понедельник'
+      : selectedDay === 2
+        ? 'вторник'
+        : selectedDay === 3
+          ? 'среду'
+          : selectedDay === 4
+            ? 'четверг'
+            : 'пятницу';
 
   return (
-    <div className={'flex flex-col gap-3'}>
-      <ScrollArea className={'whitespace-nowrap w-full overflow-hidden'}>
-        <div className={'flex items-center flex-nowrap space-x-3 rounded-full p-2'}>
-          {uniqueGroups.map((group, index) => (
-            <button
-              key={index}
-              onClick={() => handleButtonClick(group)}
-              className={`${selectedGroup === group ? 'bg-gray-800 text-white scale-110' : 'bg-gray-200 text-black scale-95'} text-sm p-2 rounded-full transition-all px-4 duration-200`}
-            >
-              {group}
-            </button>
-          ))}
-        </div>
-        <ScrollBar className={'hidden'} orientation={'horizontal'} />
-      </ScrollArea>
+    <div className={'flex flex-col gap-2'}>
+      <div>
+        <Courses />
+        <Groups groups={groups} fetching={groupsFetching} />
+        <Days />
+      </div>
 
-      <div className='flex flex-col gap-2'>
-        <AnimatePresence>
-          {filteredTimetable.map((entry, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3, delay: index * 0.1 }}
-            >
-              <ScheduleCard key={index} lesson={entry} />
-            </motion.div>
-          ))}
-        </AnimatePresence>
+      <div className='flex flex-col gap-2 relative h-full'>
+        {schedulesFetching ? (
+          <Loader className={'size-5 text-muted-foreground'} absoluteCenter />
+        ) : !schedulesFetching && schedules.length === 0 ? (
+          <p
+            className={
+              'absolute top-1/2 left-1/2 text-nowrap mt-40 -translate-x-2/4 -translate-y-2/4 text-muted-foreground text-sm'
+            }
+          >
+            {currentDay === 'вторник' ? 'Во' : 'В'} {currentDay} нет занятий.
+          </p>
+        ) : (
+          <AnimatePresence>
+            {schedules.map((schedule, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <ScheduleCard schedule={schedule} />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        )}
       </div>
     </div>
   );

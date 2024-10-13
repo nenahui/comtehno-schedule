@@ -1,11 +1,34 @@
-import { guestBookSlice } from '@/features/guestBook/guestBookSlice';
-import { configureStore } from '@reduxjs/toolkit';
+import { adminSlice } from '@/features/admin/adminSlice';
+import { homeSlice } from '@/features/home/homeSlice';
+import { usersSlice } from '@/features/users/usersSlice';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER, persistStore } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+
+const usersPersistConfig = {
+  key: 'comtehno:users',
+  storage,
+  whitelist: ['user'],
+};
+
+const rootReducer = combineReducers({
+  users: persistReducer(usersPersistConfig, usersSlice.reducer),
+  home: homeSlice.reducer,
+  admin: adminSlice.reducer,
+});
 
 export const store = configureStore({
-  reducer: {
-    guestbook: guestBookSlice.reducer,
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) => {
+    return getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    });
   },
 });
+
+export const persistor = persistStore(store);
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

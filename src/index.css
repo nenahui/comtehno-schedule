@@ -64,3 +64,22 @@
     @apply bg-background text-foreground;
   }
 }
+
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
+.hamburger-react {
+  width: 20px !important;
+  height: 20px !important;
+  padding: 0;
+}
+
+.active {
+  @apply text-gray-50 focus-visible:text-gray-50 hover:text-gray-50 active:text-gray-50 focus-within:text-gray-50 !important;
+}

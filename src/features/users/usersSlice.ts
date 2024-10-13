@@ -1,19 +1,15 @@
-import { login, register } from '@/features/users/usersThunks';
-import type { GlobalError, User, ValidationError } from '@/types';
+import { login } from '@/features/users/usersThunks';
+import type { GlobalError, User } from '@/types';
 import { createSlice } from '@reduxjs/toolkit';
 
 interface UsersState {
   user: User | null;
-  registerLoading: boolean;
-  registerError: ValidationError | null;
   loginLoading: boolean;
   loginError: GlobalError | null;
 }
 
 const initialState: UsersState = {
   user: null,
-  registerLoading: false,
-  registerError: null,
   loginLoading: false,
   loginError: null,
 };
@@ -27,20 +23,6 @@ export const usersSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder
-      .addCase(register.pending, (state) => {
-        state.registerLoading = true;
-        state.registerError = null;
-      })
-      .addCase(register.fulfilled, (state, { payload: user }) => {
-        state.registerLoading = false;
-        state.user = user;
-      })
-      .addCase(register.rejected, (state, { payload: error }) => {
-        state.registerError = error || null;
-        state.registerLoading = false;
-      });
-
     builder
       .addCase(login.pending, (state) => {
         state.loginLoading = true;
@@ -57,8 +39,6 @@ export const usersSlice = createSlice({
   },
   selectors: {
     selectUser: (state) => state.user,
-    selectRegisterLoading: (state) => state.registerLoading,
-    selectRegisterError: (state) => state.registerError,
     selectLoginLoading: (state) => state.loginLoading,
     selectLoginError: (state) => state.loginError,
   },
@@ -66,5 +46,4 @@ export const usersSlice = createSlice({
 
 export const { unsetUser } = usersSlice.actions;
 
-export const { selectRegisterLoading, selectRegisterError, selectLoginLoading, selectLoginError, selectUser } =
-  usersSlice.selectors;
+export const { selectLoginLoading, selectLoginError, selectUser } = usersSlice.selectors;

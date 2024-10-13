@@ -1,0 +1,29 @@
+.mainNav {
+  @apply max-md:basis-full max-md:order-1 overflow-hidden max-md:h-0;
+
+  transition: height 1s ease-in-out;
+}
+
+.mainNavOpen {
+  @apply h-[170px];
+}
+
+.nav {
+  @apply flex justify-between max-md:flex-col max-md:gap-4 text-sm;
+
+  & a {
+    @apply text-muted-foreground duration-200 transition-opacity;
+  }
+}
+
+.btn {
+  @apply md:hidden absolute right-2 !important;
+}
+
+.btnLogout {
+  @apply md:right-2 absolute right-12 top-2 !important;
+}
+
+.section {
+  @apply max-md:mt-10 md:pt-1.5  !important;
+}
