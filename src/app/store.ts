@@ -1,8 +1,11 @@
-import { adminSlice } from '@/features/admin/adminSlice';
-import { homeSlice } from '@/features/home/homeSlice';
+import { audiencesSlice } from '@/features/audiences/audiencesSlice';
+import { disciplinesSlice } from '@/features/disciplines/disciplinesSlice';
+import { groupsSlice } from '@/features/groups/groupsSlice';
+import { schedulesSlice } from '@/features/schedules/schedulesSlice';
+import { teachersSlice } from '@/features/teachers/teachersSlice';
 import { usersSlice } from '@/features/users/usersSlice';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER, persistStore } from 'redux-persist';
+import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 const usersPersistConfig = {
@@ -13,8 +16,11 @@ const usersPersistConfig = {
 
 const rootReducer = combineReducers({
   users: persistReducer(usersPersistConfig, usersSlice.reducer),
-  home: homeSlice.reducer,
-  admin: adminSlice.reducer,
+  teachers: teachersSlice.reducer,
+  groups: groupsSlice.reducer,
+  audiences: audiencesSlice.reducer,
+  disciplines: disciplinesSlice.reducer,
+  schedules: schedulesSlice.reducer,
 });
 
 export const store = configureStore({

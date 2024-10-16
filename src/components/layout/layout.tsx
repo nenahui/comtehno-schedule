@@ -56,7 +56,7 @@ export const Layout: React.FC<PropsWithChildren> = ({ children }) => {
                 <NavLink to={'/'}>Главная</NavLink>
               </li>
               <li>
-                <NavLink to={'/groups'} className={'hover:text-gray-50 hover:opacity-100 !important'}>
+                <NavLink to={'/groupsList'} className={'hover:text-gray-50 hover:opacity-100 !important'}>
                   Группы
                 </NavLink>
               </li>

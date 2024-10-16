@@ -1,4 +1,4 @@
-import { Error403 } from '@/components/Errors/Error403';
+import { Error403 } from '@/components/errors/error403';
 import React from 'react';
 
 interface Props extends React.PropsWithChildren {

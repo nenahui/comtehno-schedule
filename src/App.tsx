@@ -1,15 +1,14 @@
 import { useAppSelector } from '@/app/hooks';
-import { Error404 } from '@/components/Errors/Error404';
+import { Error404 } from '@/components/errors/error404';
 import { Layout } from '@/components/layout/layout';
 import { ProtectedRoute } from '@/components/protectedRoute/protectedRoute';
 import { Toaster } from '@/components/ui/sonner';
-import { CreateAudience } from '@/features/admin/createAudience';
-import { CreateDiscipline } from '@/features/admin/createDiscipline';
-import { CreateGroup } from '@/features/admin/createGroup';
-import { CreateSchedule } from '@/features/admin/createSchedule';
-import { CreateTeachers } from '@/features/admin/createTeachers';
+import { Audiences } from '@/features/audiences/audiences';
 import { Developers } from '@/features/developers/developers';
-import { Home } from '@/features/home/home';
+import { Disciplines } from '@/features/disciplines/disciplines';
+import { Groups } from '@/features/groups/groups';
+import { Schedules } from '@/features/schedules/schedules';
+import { Teachers } from '@/features/teachers/teachers';
 import { Login } from '@/features/users/login';
 import { selectUser } from '@/features/users/usersSlice';
 import React from 'react';
@@ -22,13 +21,13 @@ export const App: React.FC = () => {
     <Layout>
       <Toaster />
       <Routes>
-        <Route path={'/'} element={<Home />} />
+        <Route path={'/'} element={<Schedules />} />
         <Route path={'/developers'} element={<Developers />} />
         <Route
           path={'/schedules'}
           element={
             <ProtectedRoute isAllowed={Boolean(user?.token)}>
-              <CreateSchedule />
+              <Schedules />
             </ProtectedRoute>
           }
         />
@@ -36,7 +35,7 @@ export const App: React.FC = () => {
           path={'/teachers'}
           element={
             <ProtectedRoute isAllowed={Boolean(user?.token)}>
-              <CreateTeachers />
+              <Teachers />
             </ProtectedRoute>
           }
         />
@@ -44,7 +43,7 @@ export const App: React.FC = () => {
           path={'/groups'}
           element={
             <ProtectedRoute isAllowed={Boolean(user?.token)}>
-              <CreateGroup />
+              <Groups />
             </ProtectedRoute>
           }
         />
@@ -52,7 +51,7 @@ export const App: React.FC = () => {
           path={'/disciplines'}
           element={
             <ProtectedRoute isAllowed={Boolean(user?.token)}>
-              <CreateDiscipline />
+              <Disciplines />
             </ProtectedRoute>
           }
         />
@@ -60,7 +59,7 @@ export const App: React.FC = () => {
           path={'/audiences'}
           element={
             <ProtectedRoute isAllowed={Boolean(user?.token)}>
-              <CreateAudience />
+              <Audiences />
             </ProtectedRoute>
           }
         />

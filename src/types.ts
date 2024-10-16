@@ -3,7 +3,7 @@ export interface Group {
   name: string;
 }
 
-export interface GroupMutation {
+export interface GroupsMutation {
   name: string;
   course: string;
 }
@@ -99,4 +99,10 @@ export interface User {
 export interface LoginMutation {
   email: string;
   password: string;
+}
+
+export interface fetchSchedulesArgs {
+  groupId: number;
+  course: number;
+  dayOfWeek: number;
 }
