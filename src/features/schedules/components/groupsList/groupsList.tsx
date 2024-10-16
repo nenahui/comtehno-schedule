@@ -15,12 +15,20 @@ export const GroupsList: React.FC<Props> = ({ groups, fetching }) => {
   const groupRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   useEffect(() => {
+    const localGroup = localStorage.getItem('comtehno:group');
+    const localGroupExists = groups.some((group) => group.id === parseFloat(localGroup || ''));
+    if (localGroup && localGroupExists) {
+      dispatch(setGroup(parseFloat(localGroup)));
+      return;
+    }
+
     if (groups.length > 0) {
       dispatch(setGroup(groups[0].id));
     }
   }, [dispatch, groups]);
 
   const handleChooseGroup = (id: number) => {
+    localStorage.setItem('comtehno:group', id.toString());
     dispatch(setGroup(id));
     dispatch(fetchSchedules());
   };
