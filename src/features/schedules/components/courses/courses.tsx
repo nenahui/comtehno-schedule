@@ -29,7 +29,7 @@ export const Courses: React.FC = () => {
           <button
             key={course}
             onClick={() => handleChooseCourse(course)}
-            className={`bg-gray-200 text-black scale-95 ${selectedCourse === course && 'scale-105 bg-gray-800 text-white'} text-xs p-2 rounded-full transition-all w-full px-3 duration-200`}
+            className={`bg-muted text-black scale-95 ${selectedCourse === course ? 'scale-105 bg-primary dark:bg-slate-900 text-white' : 'dark:bg-white'} text-sm p-2 h-10 rounded-full transition-all w-full px-3 duration-200`}
           >
             {course} курс
           </button>

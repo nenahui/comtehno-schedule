@@ -25,7 +25,7 @@ export const Days: React.FC = () => {
           <button
             key={day}
             onClick={() => handleChooseDays(day)}
-            className={`bg-gray-200 text-black scale-95 ${selectedDay === day && 'scale-105 bg-gray-800 text-white'} text-xs p-2 rounded-full transition-all w-full px-3 duration-200`}
+            className={`bg-muted text-black scale-95 ${selectedDay === day ? 'scale-105 dark:bg-slate-900 bg-primary text-white' : 'dark:bg-white'} text-[13px] p-2 rounded-full h-10 transition-all w-full px-3 duration-200`}
           >
             {day === 1 ? 'Пн' : day === 2 ? 'Вт' : day === 3 ? 'Ср' : day === 4 ? 'Чт' : 'Пт'}
           </button>

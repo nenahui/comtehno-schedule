@@ -53,7 +53,7 @@ export const GroupsList: React.FC<Props> = ({ groups, fetching }) => {
               key={group.id}
               ref={(el) => (groupRefs.current[group.id] = el)}
               onClick={() => handleChooseGroup(group.id)}
-              className={`bg-gray-200 text-black scale-95 ${selectedGroup === group.id && 'scale-105 bg-gray-800 text-white'} text-xs p-2 rounded-full transition-all px-3 duration-200`}
+              className={`bg-muted text-black scale-95 ${selectedGroup === group.id ? 'scale-105 dark:bg-slate-900 bg-primary text-white' : 'dark:bg-white'} text-[13px] p-2 h-10 rounded-full transition-all px-3 duration-200`}
             >
               {group.name}
             </button>

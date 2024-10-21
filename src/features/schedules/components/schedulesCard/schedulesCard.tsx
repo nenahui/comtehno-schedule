@@ -21,9 +21,9 @@ export const SchedulesCard: React.FC<Props> = ({ schedule }) => {
   };
 
   return (
-    <div className={'bg-white p-3 scale-95 rounded-3xl flex text-black items-center gap-2 justify-between'}>
+    <div className={'bg-primary p-3 rounded-3xl flex items-center gap-2 justify-between'}>
       <div className={'flex gap-2 items-center h-full'}>
-        <h3 className={'bg-gray-900 text-white p-3 rounded-2xl flex flex-col'}>
+        <h3 className={'bg-white dark:bg-slate-900 text-black dark:text-white p-3 rounded-2xl flex flex-col'}>
           <p className={'leading-none mx-auto border-white'}>{schedule.startDate.slice(0, 5)}</p>
           <p className={'text-xs mx-auto leading-none text-center text-muted-foreground'}>
             {schedule.endDate.slice(0, 5)}
@@ -31,25 +31,29 @@ export const SchedulesCard: React.FC<Props> = ({ schedule }) => {
         </h3>
 
         <div className={'flex flex-col gap-1.5'}>
-          <h3 className={'leading-none text-[15px] line-clamp-2'}>{schedule.disciplineDto.name}</h3>
-          <span className={'text-sm text-muted-foreground leading-none'}>
-            {schedule.teacherDto.surname}.{schedule.teacherDto.name[0]}.{schedule.teacherDto.patronymic[0]}.
+          <h3 className={'leading-[1.15] text-white dark:text-black text-[15px] line-clamp-2'}>
+            {schedule.disciplineDto.name}
+          </h3>
+          <span className={'text-sm text-muted leading-none'}>
+            {schedule.teacherDto.surname} {schedule.teacherDto.name[0]}.{schedule.teacherDto.patronymic[0]}.
           </span>
         </div>
       </div>
 
       <div className={'flex items-center gap-1'}>
-        <div className={'p-1.5 bg-gray-900 rounded-full mx-2 text-sm grid place-items-center text-white'}>
+        <div className={'p-1.5 bg-white dark:bg-slate-800 rounded-full mx-2 text-sm grid place-items-center'}>
           {schedule.audienceDto.number}
         </div>
 
         {user?.token && (
           <button
             onClick={handleDelete}
-            className={'bg-gray-900 p-2.5 hover:bg-gray-800 rounded-full text-sm grid place-items-center text-white'}
+            className={
+              'bg-white dark:bg-slate-900 p-2.5 hover:bg-gray-800 rounded-full text-sm grid place-items-center text-white'
+            }
           >
             {!deletingSchedule ? (
-              <TrashIcon className={'size-4'} />
+              <TrashIcon className={'size-4 text-primary'} />
             ) : (
               <Loader className={'size-4 text-muted-foreground'} />
             )}
