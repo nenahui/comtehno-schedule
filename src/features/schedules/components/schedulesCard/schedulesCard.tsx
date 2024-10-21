@@ -41,7 +41,7 @@ export const SchedulesCard: React.FC<Props> = ({ schedule }) => {
       </div>
 
       <div className={'flex items-center gap-1'}>
-        <div className={'p-1.5 bg-white dark:bg-slate-800 rounded-full mx-2 text-sm grid place-items-center'}>
+        <div className={'p-1.5 bg-white dark:bg-slate-800  rounded-full mx-2 text-sm grid place-items-center'}>
           {schedule.audienceDto.number}
         </div>
 
